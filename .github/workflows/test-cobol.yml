@@ -20,7 +20,7 @@ jobs:
         run: cobc -x cartoes.cbl
 
       - name: Executar programa
-        run: ./cartoes < cartoes.txt > relatorio.txt
+        run: ./cartoes
 
       - name: Verificar saída
         run: cat relatorio.txt
