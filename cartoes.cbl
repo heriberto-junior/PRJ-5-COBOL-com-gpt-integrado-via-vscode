@@ -21,7 +21,11 @@
 
        WORKING-STORAGE SECTION.
        01  FIM-ARQUIVO         PIC X VALUE 'N'.
-       01  PROCESSADO-STATUS   PIC X(20).
+    01  PROCESSADO-STATUS   PIC X(10).
+    01  WS-RELATORIO-NUMERO PIC 9(5).
+    01  WS-RELATORIO-NOME   PIC X(20).
+    01  WS-RELATORIO-VALOR  PIC 9(6).
+    01  WS-RELATORIO-STATUS PIC X(10).
 
        PROCEDURE DIVISION.
            OPEN INPUT CARTAO-INFILE
@@ -36,11 +40,18 @@
                        ELSE
                            MOVE 'REJEITADO' TO PROCESSADO-STATUS
                        END-IF
-                       STRING CARTAO-NUMERO ' '
-                              CARTAO-NOME ' '
-                              CARTAO-VALOR ' '
-                              PROCESSADO-STATUS
-                              DELIMITED BY SIZE INTO RELATORIO-REGISTRO
+                       MOVE CARTAO-NUMERO    TO WS-RELATORIO-NUMERO
+                       MOVE CARTAO-NOME      TO WS-RELATORIO-NOME
+                       MOVE CARTAO-VALOR     TO WS-RELATORIO-VALOR
+                       MOVE PROCESSADO-STATUS TO WS-RELATORIO-STATUS
+                       STRING WS-RELATORIO-NUMERO DELIMITED BY SIZE
+                              ' ' DELIMITED BY SIZE
+                              WS-RELATORIO-NOME DELIMITED BY SIZE
+                              ' ' DELIMITED BY SIZE
+                              WS-RELATORIO-VALOR DELIMITED BY SIZE
+                              ' ' DELIMITED BY SIZE
+                              WS-RELATORIO-STATUS DELIMITED BY SIZE
+                              INTO RELATORIO-REGISTRO
                        WRITE RELATORIO-REGISTRO
                END-READ
            END-PERFORM
