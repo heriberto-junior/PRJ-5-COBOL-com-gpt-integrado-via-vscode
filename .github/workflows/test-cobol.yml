@@ -19,14 +19,10 @@ jobs:
       - name: Compilar programa
         run: cobc -x cartoes.cbl
 
-      - name: Verificar versão do Cobol
-        run: cobc --version
-
-      - name: Limpar arquivo de saída anterior
-        run: rm -f relatorio.txt
-
       - name: Executar programa
-        run: ./cartoes
+        run: |
+          touch relatorio.txt
+          ./cartoes
 
       - name: Verificar saída
         run: cat relatorio.txt
